@@ -3,17 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Phen Digital Token</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h1>Phen Digital Token</h1>
-  <h2>PDT</h2>
 
-  <p>Welcome to the Phen Digital Token ecosystem.</p>
+  <main class="container">
 
-  <button>Connect Pi Wallet</button>
-  <button>Open Marketplace</button>
+    <h1>Phen Digital Token</h1>
+
+    <div class="token">
+      <span>PDT</span>
+    </div>
+
+    <p class="subtitle">
+      Phen Digital Token Ecosystem
+    </p>
+
+    <section class="card">
+      <h2>Pi Testnet</h2>
+
+      <p>
+        Connect your Pi account to access the PDT ecosystem.
+      </p>
+
+      <button id="connectPi">
+        Connect Pi Wallet
+      </button>
+    </section>
+
+    <section class="card">
+      <h2>PDT Marketplace</h2>
+
+      <p>
+        Buy, sell and manage PDT ecosystem assets.
+      </p>
+
+      <button id="marketplace">
+        Open Marketplace
+      </button>
+    </section>
+
+    <section class="card">
+      <h2>PDT Balance</h2>
+
+      <p id="pdtBalance">0 PDT</p>
+    </section>
+
+    <p class="network">
+      Network: Pi Testnet
+    </p>
+
+  </main>
+
+  <script>
+    document
+      .getElementById("connectPi")
+      .addEventListener("click", function () {
+        alert("Pi authentication will be connected here.");
+      });
+
+    document
+      .getElementById("marketplace")
+      .addEventListener("click", function () {
+        alert("PDT Marketplace is being prepared.");
+      });
+  </script>
 
 </body>
 </html>
