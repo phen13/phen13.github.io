@@ -1,0 +1,55 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1020;
+  color: white;
+  text-align: center;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+.logo {
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.subtitle {
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 24px;
+  margin: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.connect {
+  background: #f5c542;
+  color: #111;
+}
+
+.market {
+  background: #ffffff;
+  color: #111;
+}
+
+.card {
+  margin-top: 40px;
+  padding: 25px;
+  border-radius: 20px;
+  background: #151c32;
+}
+
+.token {
+  font-size: 30px;
+  font-weight: bold;
+}
