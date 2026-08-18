@@ -1,55 +1,82 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #0b1020;
-  color: white;
-  text-align: center;
+  background: #f5effb;
+  color: #2b1838;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 520px;
   margin: auto;
-  padding: 40px 20px;
+  padding: 30px 20px;
+  text-align: center;
 }
 
-.logo {
-  font-size: 60px;
+h1 {
+  margin-bottom: 8px;
+  color: #6f3c91;
+}
+
+.token {
+  width: 90px;
+  height: 90px;
+  margin: 20px auto;
+  border-radius: 50%;
+  background: #7b3fa0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 25px;
   font-weight: bold;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .subtitle {
-  color: #aaa;
-  margin-bottom: 30px;
+  color: #66556f;
+}
+
+.card {
+  background: white;
+  margin-top: 20px;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+  margin-top: 0;
 }
 
 button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
   border: none;
   border-radius: 12px;
-  padding: 14px 24px;
-  margin: 8px;
+  background: #7b3fa0;
+  color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
 }
 
-.connect {
-  background: #f5c542;
-  color: #111;
+button:active {
+  transform: scale(0.98);
 }
 
-.market {
-  background: #ffffff;
-  color: #111;
-}
-
-.card {
-  margin-top: 40px;
-  padding: 25px;
-  border-radius: 20px;
-  background: #151c32;
-}
-
-.token {
-  font-size: 30px;
+#pdtBalance {
+  font-size: 24px;
   font-weight: bold;
+  color: #7b3fa0;
+}
+
+.network {
+  margin-top: 25px;
+  font-size: 14px;
+  color: #777;
 }
