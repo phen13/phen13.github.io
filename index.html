@@ -2,75 +2,1059 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <title>Phen Digital Token</title>
+  <title>Phen Digital Token | PDT</title>
 
-  <link rel="stylesheet" href="style.css">
+  <!-- Pi Network SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+      min-height: 100vh;
+
+      background:
+        radial-gradient(
+          circle at top,
+          #4c1d65 0%,
+          #24102f 38%,
+          #0f0915 100%
+        );
+
+      color: #ffffff;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .container {
+      width: min(100%, 1000px);
+      margin: 0 auto;
+      padding: 28px 18px 50px;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header {
+      text-align: center;
+      padding: 20px 0 30px;
+    }
+
+    .brand {
+      font-size: clamp(30px, 7vw, 52px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #d8cbe2;
+      font-size: 16px;
+    }
+
+    .network-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-top: 16px;
+      padding: 8px 14px;
+
+      border-radius: 999px;
+
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+
+      color: #e7d9ef;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f4b740;
+      box-shadow: 0 0 10px rgba(244,183,64,0.7);
+    }
+
+    .status-dot.connected {
+      background: #48d597;
+      box-shadow: 0 0 10px rgba(72,213,151,0.7);
+    }
+
+    /* =========================
+       TOKEN
+    ========================= */
+
+    .token-area {
+      display: flex;
+      justify-content: center;
+      margin: 8px 0 35px;
+    }
+
+    .token {
+      width: 150px;
+      height: 150px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background:
+        linear-gradient(
+          145deg,
+          #70299a,
+          #321442
+        );
+
+      border: 4px solid rgba(255,255,255,0.12);
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.4),
+        inset 0 0 25px rgba(255,255,255,0.08);
+    }
+
+    .token span {
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    /* =========================
+       GRID
+    ========================= */
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.075);
+
+      border: 1px solid rgba(255,255,255,0.11);
+
+      border-radius: 22px;
+
+      padding: 24px;
+
+      backdrop-filter: blur(14px);
+
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.2);
+    }
+
+    .card.full {
+      grid-column: 1 / -1;
+    }
+
+    .card h2 {
+      font-size: 21px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #cfc2d8;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* =========================
+       USER
+    ========================= */
+
+    .user-panel {
+      display: none;
+      margin-top: 18px;
+
+      padding: 15px;
+
+      border-radius: 15px;
+
+      background: rgba(72,213,151,0.08);
+      border: 1px solid rgba(72,213,151,0.2);
+    }
+
+    .user-panel.visible {
+      display: block;
+    }
+
+    .user-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .user-address {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #a99daf;
+      word-break: break-all;
+    }
+
+    /* =========================
+       BUTTONS
+    ========================= */
+
+    .button {
+      width: 100%;
+
+      border: none;
+      border-radius: 14px;
+
+      padding: 15px 18px;
+
+      margin-top: 18px;
+
+      font-size: 15px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      color: #ffffff;
+
+      background:
+        linear-gradient(
+          135deg,
+          #7430a0,
+          #4c1d68
+        );
+
+      box-shadow:
+        0 8px 20px rgba(0,0,0,0.25);
+
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 12px 25px rgba(0,0,0,0.3);
+    }
+
+    .button:active {
+      transform: translateY(0);
+    }
+
+    .button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .button.secondary {
+      background:
+        rgba(255,255,255,0.08);
+
+      border:
+        1px solid rgba(255,255,255,0.12);
+    }
+
+    /* =========================
+       BALANCE
+    ========================= */
+
+    .balance {
+      font-size: 36px;
+      font-weight: 900;
+
+      margin-top: 12px;
+    }
+
+    .balance-label {
+      color: #a99daf;
+      font-size: 13px;
+    }
+
+    /* =========================
+       MARKETPLACE
+    ========================= */
+
+    .marketplace {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+
+      margin-top: 20px;
+    }
+
+    .asset {
+      padding: 18px;
+
+      border-radius: 17px;
+
+      background: rgba(0,0,0,0.18);
+
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .asset-icon {
+      width: 50px;
+      height: 50px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 14px;
+
+      background: rgba(117,48,160,0.3);
+
+      font-size: 24px;
+
+      margin-bottom: 12px;
+    }
+
+    .asset h3 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .asset p {
+      font-size: 12px;
+      color: #aaa0b0;
+    }
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    .message {
+      display: none;
+
+      margin-top: 18px;
+      padding: 13px 15px;
+
+      border-radius: 12px;
+
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .message.visible {
+      display: block;
+    }
+
+    .message.info {
+      background: rgba(100,150,255,0.1);
+      border: 1px solid rgba(100,150,255,0.2);
+      color: #cddcff;
+    }
+
+    .message.success {
+      background: rgba(72,213,151,0.1);
+      border: 1px solid rgba(72,213,151,0.2);
+      color: #a8f1d2;
+    }
+
+    .message.error {
+      background: rgba(255,90,90,0.1);
+      border: 1px solid rgba(255,90,90,0.2);
+      color: #ffbcbc;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+      text-align: center;
+      padding-top: 35px;
+
+      color: #83788a;
+      font-size: 12px;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 700px) {
+
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .card.full {
+        grid-column: auto;
+      }
+
+      .marketplace {
+        grid-template-columns: 1fr;
+      }
+
+      .token {
+        width: 135px;
+        height: 135px;
+      }
+
+      .token span {
+        font-size: 34px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
   <main class="container">
 
-    <h1>Phen Digital Token</h1>
+    <!-- HEADER -->
+    <header class="header">
 
-    <div class="token">
-      <span>PDT</span>
+      <h1 class="brand">
+        Phen Digital Token
+      </h1>
+
+      <p class="subtitle">
+        PDT Digital Asset Ecosystem
+      </p>
+
+      <div class="network-badge">
+        <span
+          id="statusDot"
+          class="status-dot"
+        ></span>
+
+        <span id="networkText">
+          Pi Testnet
+        </span>
+      </div>
+
+    </header>
+
+
+    <!-- TOKEN -->
+    <div class="token-area">
+
+      <div class="token">
+        <span>PDT</span>
+      </div>
+
     </div>
 
-    <p class="subtitle">
-      Phen Digital Token Ecosystem
-    </p>
 
-    <section class="card">
-      <h2>Pi Testnet</h2>
+    <!-- DASHBOARD -->
+    <section class="dashboard">
 
-      <p>
-        Connect your Pi account to access the PDT ecosystem.
-      </p>
 
-      <button id="connectPi">
-        Connect Pi Wallet
-      </button>
+      <!-- PI ACCOUNT -->
+      <div class="card">
+
+        <h2>
+          Pi Account
+        </h2>
+
+        <p>
+          Authenticate with your Pi account to access
+          the PDT ecosystem.
+        </p>
+
+        <button
+          id="connectPi"
+          class="button"
+          type="button"
+        >
+          Sign in with Pi
+        </button>
+
+        <div
+          id="userPanel"
+          class="user-panel"
+        >
+
+          <div
+            id="userName"
+            class="user-name"
+          >
+            Pioneer
+          </div>
+
+          <div
+            id="userAddress"
+            class="user-address"
+          >
+            Pi account connected
+          </div>
+
+        </div>
+
+        <div
+          id="authMessage"
+          class="message"
+        ></div>
+
+      </div>
+
+
+      <!-- BALANCE -->
+      <div class="card">
+
+        <h2>
+          PDT Balance
+        </h2>
+
+        <div
+          id="pdtBalance"
+          class="balance"
+        >
+          0
+        </div>
+
+        <div class="balance-label">
+          PDT
+        </div>
+
+        <p style="margin-top:14px;">
+          Your PDT balance will be displayed here
+          when the PDT backend is connected.
+        </p>
+
+      </div>
+
+
+      <!-- MARKETPLACE -->
+      <div
+        id="marketplaceSection"
+        class="card full"
+      >
+
+        <h2>
+          PDT Marketplace
+        </h2>
+
+        <p>
+          Explore digital assets available within
+          the Phen Digital Token ecosystem.
+        </p>
+
+        <div class="marketplace">
+
+          <div class="asset">
+
+            <div class="asset-icon">
+              ◈
+            </div>
+
+            <h3>
+              PDT Assets
+            </h3>
+
+            <p>
+              Digital assets powered by the
+              Phen ecosystem.
+            </p>
+
+          </div>
+
+
+          <div class="asset">
+
+            <div class="asset-icon">
+              ◆
+            </div>
+
+            <h3>
+              Marketplace
+            </h3>
+
+            <p>
+              Access marketplace services
+              using your authenticated Pi account.
+            </p>
+
+          </div>
+
+
+          <div class="asset">
+
+            <div class="asset-icon">
+              ◉
+            </div>
+
+            <h3>
+              Ecosystem
+            </h3>
+
+            <p>
+              Manage your PDT ecosystem activity
+              from one application.
+            </p>
+
+          </div>
+
+        </div>
+
+        <button
+          id="marketplace"
+          class="button secondary"
+          type="button"
+        >
+          Enter PDT Marketplace
+        </button>
+
+      </div>
+
+
+      <!-- NETWORK -->
+      <div class="card full">
+
+        <h2>
+          Network Information
+        </h2>
+
+        <p>
+          Application Network:
+          <strong>Pi Testnet</strong>
+        </p>
+
+        <p style="margin-top:6px;">
+          Pi authentication:
+          <strong id="authStatus">
+            Not connected
+          </strong>
+        </p>
+
+      </div>
+
     </section>
 
-    <section class="card">
-      <h2>PDT Marketplace</h2>
 
-      <p>
-        Buy, sell and manage PDT ecosystem assets.
-      </p>
-
-      <button id="marketplace">
-        Open Marketplace
-      </button>
-    </section>
-
-    <section class="card">
-      <h2>PDT Balance</h2>
-
-      <p id="pdtBalance">0 PDT</p>
-    </section>
-
-    <p class="network">
-      Network: Pi Testnet
-    </p>
+    <footer class="footer">
+      Phen Digital Token · PDT Ecosystem
+    </footer>
 
   </main>
 
+
+  <!-- =========================
+       PI INITIALIZATION
+  ========================= -->
+
   <script>
-    document
-      .getElementById("connectPi")
-      .addEventListener("click", function () {
-        alert("Pi authentication will be connected here.");
-      });
+
+    let piInitialized = false;
+    let piAuthenticated = false;
+    let piUser = null;
+    let piAuthResult = null;
+
+
+    /*
+     * Initialize Pi SDK
+     *
+     * IMPORTANT:
+     * This app is intended for the registered
+     * Pi Testnet application.
+     */
+
+    function initializePi() {
+
+      const message =
+        document.getElementById("authMessage");
+
+      try {
+
+        if (
+          typeof window.Pi === "undefined"
+        ) {
+
+          throw new Error(
+            "Pi SDK is not available. Please open this app inside Pi Browser."
+          );
+
+        }
+
+        window.Pi.init({
+          version: "2.0"
+        });
+
+        piInitialized = true;
+
+        showMessage(
+          message,
+          "Pi SDK initialized. Ready for authentication.",
+          "info"
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Pi initialization error:",
+          error
+        );
+
+        showMessage(
+          message,
+          error.message ||
+          "Unable to initialize Pi SDK.",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /*
+     * Authenticate Pioneer
+     */
+
+    async function connectPi() {
+
+      const button =
+        document.getElementById("connectPi");
+
+      const message =
+        document.getElementById("authMessage");
+
+      if (!piInitialized) {
+
+        showMessage(
+          message,
+          "Pi SDK is not ready. Please open the app in Pi Browser and try again.",
+          "error"
+        );
+
+        return;
+
+      }
+
+      button.disabled = true;
+
+      button.textContent =
+        "Connecting to Pi...";
+
+
+      try {
+
+        const scopes = [
+          "username",
+          "payments",
+          "wallet_address"
+        ];
+
+
+        const authResult =
+          await window.Pi.authenticate(
+            scopes,
+            onIncompletePaymentFound
+          );
+
+
+        piAuthResult =
+          authResult;
+
+        piUser =
+          authResult.user;
+
+
+        piAuthenticated = true;
+
+
+        updateAuthenticatedUI();
+
+
+        showMessage(
+          message,
+          "Pi authentication successful. Welcome, @" +
+          (piUser.username || "Pioneer") +
+          ".",
+          "success"
+        );
+
+
+        /*
+         * IMPORTANT:
+         *
+         * The access token is intentionally NOT
+         * displayed on screen.
+         *
+         * Your backend must verify this token
+         * with the Pi Platform API.
+         */
+
+
+        console.log(
+          "Pi authentication successful:",
+          {
+            uid: piUser.uid,
+            username: piUser.username
+          }
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Pi authentication error:",
+          error
+        );
+
+
+        piAuthenticated = false;
+        piUser = null;
+        piAuthResult = null;
+
+
+        showMessage(
+          message,
+          getPiErrorMessage(error),
+          "error"
+        );
+
+
+        button.disabled = false;
+
+        button.textContent =
+          "Sign in with Pi";
+
+      }
+
+    }
+
+
+    /*
+     * Pi SDK incomplete-payment callback
+     *
+     * This must eventually communicate with
+     * the PDT backend.
+     */
+
+    async function onIncompletePaymentFound(
+      payment
+    ) {
+
+      console.log(
+        "Incomplete Pi payment found:",
+        payment
+      );
+
+      /*
+       * DO NOT silently create a new payment.
+       *
+       * The backend should complete/resolve
+       * the existing payment first.
+       */
+
+    }
+
+
+    /*
+     * Update UI after authentication
+     */
+
+    function updateAuthenticatedUI() {
+
+      const button =
+        document.getElementById("connectPi");
+
+      const userPanel =
+        document.getElementById("userPanel");
+
+      const userName =
+        document.getElementById("userName");
+
+      const userAddress =
+        document.getElementById("userAddress");
+
+      const authStatus =
+        document.getElementById("authStatus");
+
+      const statusDot =
+        document.getElementById("statusDot");
+
+      const networkText =
+        document.getElementById("networkText");
+
+
+      userPanel.classList.add(
+        "visible"
+      );
+
+
+      userName.textContent =
+        "@" +
+        (
+          piUser.username ||
+          "Pioneer"
+        );
+
+
+      /*
+       * wallet_address is optional.
+       * We do not expose the full wallet
+       * address in the UI.
+       */
+
+      if (
+        piUser.wallet_address
+      ) {
+
+        const address =
+          piUser.wallet_address;
+
+        userAddress.textContent =
+          "Pi wallet connected · " +
+          address.slice(0, 8) +
+          "..." +
+          address.slice(-6);
+
+      } else {
+
+        userAddress.textContent =
+          "Pi account authenticated";
+
+      }
+
+
+      button.textContent =
+        "Pi Account Connected";
+
+      button.disabled = true;
+
+
+      authStatus.textContent =
+        "Connected";
+
+
+      statusDot.classList.add(
+        "connected"
+      );
+
+
+      networkText.textContent =
+        "Pi Testnet · Connected";
+
+    }
+
+
+    /*
+     * Marketplace button
+     */
 
     document
       .getElementById("marketplace")
-      .addEventListener("click", function () {
-        alert("PDT Marketplace is being prepared.");
-      });
+      .addEventListener(
+        "click",
+        function () {
+
+          document
+            .getElementById(
+              "marketplaceSection"
+            )
+            .scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+
+        }
+      );
+
+
+    /*
+     * Pi authentication button
+     */
+
+    document
+      .getElementById("connectPi")
+      .addEventListener(
+        "click",
+        connectPi
+      );
+
+
+    /*
+     * Message helper
+     */
+
+    function showMessage(
+      element,
+      text,
+      type
+    ) {
+
+      element.textContent =
+        text;
+
+      element.className =
+        "message visible " +
+        type;
+
+    }
+
+
+    /*
+     * Error helper
+     */
+
+    function getPiErrorMessage(
+      error
+    ) {
+
+      if (!error) {
+
+        return "Pi authentication failed.";
+
+      }
+
+
+      if (
+        typeof error === "string"
+      ) {
+
+        return error;
+
+      }
+
+
+      if (
+        error.message
+      ) {
+
+        return error.message;
+
+      }
+
+
+      return "Pi authentication was cancelled or failed.";
+
+    }
+
+
+    /*
+     * Start Pi SDK
+     */
+
+    initializePi();
+
   </script>
 
 </body>
